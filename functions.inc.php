@@ -170,7 +170,7 @@ function logEntry($data) {
 
 function sendLineMessage($line,$clearMessage=FALSE) {
 
-	global $DEBUG,$pluginName, $IMMEDIATE_OUTPUT,$settings,$MATRIX_MESSAGE_PLUGIN_NAME;
+	global $DEBUG,$pluginName, $IMMEDIATE_OUTPUT,$settings,$MATRIX_MESSAGE_PLUGIN_NAME,$MATRIX_LOCATION,$MATRIX_EXEC_PAGE_NAME;
 	if($DEBUG)
 		logEntry("starting sendlinemessage");
 
@@ -183,9 +183,18 @@ function sendLineMessage($line,$clearMessage=FALSE) {
 		logEntry("NOT immediately outputting to matrix");
 	} else {
 		logEntry("IMMEDIATE OUTPUT ENABLED");
+		logEntry("Matrix location: ".$MATRIX_LOCATION);
+		logEntry("Matrix Exec page: ".$MATRIX_EXEC_PAGE_NAME);
 		
-		$IMMEDIATE_CMD = $settings['pluginDirectory']."/".$MATRIX_MESSAGE_PLUGIN_NAME."/matrix.php";
-		exec($IMMEDIATE_CMD);
+		if($MATRIX_LOCATION != "127.0.0.1") {
+			$remoteCMD = "/usr/bin/curl -s --basic 'http://".$MATRIX_LOCATION."/plugin.php?plugin=".$MATRIX_MESSAGE_PLUGIN_NAME."&page=".$MATRIX_EXEC_PAGE_NAME."' > /dev/null";
+			logEntry("REMOTE MATRIX TRIGGER: ".$remoteCMD);
+			exec($remoteCMD);
+		} else {
+			$IMMEDIATE_CMD = $settings['pluginDirectory']."/".$MATRIX_MESSAGE_PLUGIN_NAME."/matrix.php";
+			logEntry("LOCAL command: ".$IMMEDIATE_CMD);
+			exec($IMMEDIATE_CMD);
+		}
 	}
 	
 	if($DEBUG)

@@ -13,6 +13,9 @@ include_once("functions.inc.php");
 include_once("commonFunctions.inc.php");
 
 $MATRIX_MESSAGE_PLUGIN_NAME = "MatrixMessage";
+//page name to run the matrix code to output to matrix (remote or local);
+$MATRIX_EXEC_PAGE_NAME = "matrix.php";
+
 
 $messageQueue_Plugin = "MessageQueue";
 $MESSAGE_QUEUE_PLUGIN_ENABLED=false;
@@ -39,6 +42,7 @@ if (file_exists($pluginConfigFile))
 	
 $ENABLED = urldecode($pluginSettings['ENABLED']);
 $IMMEDIATE_OUTPUT = urldecode($pluginSettings['IMMEDIATE_OUTPUT']);
+$MATRIX_LOCATION = urldecode($pluginSettings['MATRIX_LOCATION']);
 
 //arg0 is  the program
 //arg1 is the first argument in the registration this will be --list

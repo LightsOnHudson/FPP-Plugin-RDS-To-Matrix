@@ -24,6 +24,8 @@ $STATIC_TEXT_POST=trim($_POST["STATIC_TEXT_POST"]);
 $STATIC_TEXT_PRE=trim($_POST["STATIC_TEXT_PRE"]);
 $ENABLED=$_POST["ENABLED"];
 $IMMEDIATE_OUTPUT=$_POST["IMMEDIATE_OUTPUT"];
+$MATRIX_LOCATION=$_POST["MATRIX_LOCATION"];
+
 
 $SEPARATOR = $_POST["SEPARATOR"];
 
@@ -50,17 +52,17 @@ if(isset($_POST['submit']))
 	WriteSettingToFile("IMMEDIATE_OUTPUT",$IMMEDIATE_OUTPUT,$pluginName);
 	WriteSettingToFile("STATION_ID",urlencode($STATION_ID),$pluginName);
 	WriteSettingToFile("SEPARATOR",urlencode($SEPARATOR),$pluginName);
-
+	WriteSettingToFile("MATRIX_LOCATION",urlencode($MATRIX_LOCATION),$pluginName);
 } else {
 
 	
-	$STATION_ID = $pluginSettings['STATION_ID'];
+	$STATION_ID = urldecode($pluginSettings['STATION_ID']);
 	
 	$STATIC_TEXT_PRE = urldecode($pluginSettings['STATIC_TEXT_PRE']);
 	$STATIC_TEXT_POST = urldecode($pluginSettings['STATIC_TEXT_POST']);
 	$ENABLED = $pluginSettings['ENABLED'];
 	$IMMEDIATE_OUTPUT = $pluginSettings['IMMEDIATE_OUTPUT'];
-	
+	$MATRIX_LOCATION = $pluginSettings['MATRIX_LOCATION'];
 	$SEPARATOR = urldecode($pluginSettings['SEPARATOR']);
 	
 	
@@ -145,6 +147,14 @@ Separator between SongTitle & Song Artist:
 <input type="text" value="<? if($SEPARATOR !="" ) { echo $SEPARATOR; } else { echo "-";}?>" name="SEPARATOR" id="SEPARATOR"></input>
 
 <p/>
+
+
+
+
+MATRIX Message Plugin Location: (IP Address. default 127.0.0.1);
+<input type="text" size="15" value="<? if($MATRIX_LOCATION !="" ) { echo $MATRIX_LOCATION; } else { echo "127.0.0.1";}?>" name="MATRIX_LOCATION" id="MATRIX_LOCATION"></input>
+<p/>
+
 <input id="submit_button" name="submit" type="submit" class="buttons" value="Save Config">
 
 

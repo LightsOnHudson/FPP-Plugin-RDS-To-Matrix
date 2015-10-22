@@ -1,3 +1,22 @@
 Installed/Configured Oct 21 2015
 
-Working ON Delaneys
+This plugin allows you to output the RDS text from a playlist media file to a message queue.
+
+The message queue file can be stored on a shared network device or stored locally.
+
+If you want to have the Matrix data displayed on a remote matrix, install the Matrix Mesage Plugin, the Message Queue Plugin and the rdsToMatrix
+plugin on the remote device that has the matrix connected to it.
+
+Configure the Matrix Message Plugin to output to the Matrix you have defined
+Configure the Matrix Message plugin to output the data from the rdsToMatrix plugin as defined in the subscription box
+Configure the Message Queue plugin to point to the file that is shared. This is important as the rdsToMatrix (or other plugins)
+will be writing to this file and various plugins will read from this file
+
+Enable the plugin
+Enable the messageQueue plugin
+Enable the MatrixMessage Plugin
+
+Restart FPPD
+
+Enjoy your text to your matrix!
+
