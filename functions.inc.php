@@ -187,7 +187,7 @@ function sendLineMessage($line,$clearMessage=FALSE) {
 		logEntry("Matrix Exec page: ".$MATRIX_EXEC_PAGE_NAME);
 		
 		if($MATRIX_LOCATION != "127.0.0.1") {
-			$remoteCMD = "/usr/bin/curl -s --basic 'http://".$MATRIX_LOCATION."/plugin.php?plugin=".$MATRIX_MESSAGE_PLUGIN_NAME."&page=".$MATRIX_EXEC_PAGE_NAME."' > /dev/null";
+			$remoteCMD = "/usr/bin/curl -s --basic 'http://".$MATRIX_LOCATION."/plugin.php?plugin=".$MATRIX_MESSAGE_PLUGIN_NAME."&page=".$MATRIX_EXEC_PAGE_NAME."&nopage=1' > /dev/null";
 			logEntry("REMOTE MATRIX TRIGGER: ".$remoteCMD);
 			exec($remoteCMD);
 		} else {
