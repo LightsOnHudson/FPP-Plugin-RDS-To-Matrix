@@ -170,7 +170,7 @@ function logEntry($data) {
 
 function sendLineMessage($line,$clearMessage=FALSE) {
 
-	global $DEBUG,$pluginName, $IMMEDIATE_OUTPUT,$settings,$MATRIX_MESSAGE_PLUGIN_NAME,$MATRIX_LOCATION,$MATRIX_EXEC_PAGE_NAME;
+	global $DEBUG,$pluginName,$REMOTE_EDMRDS,$IMMEDIATE_OUTPUT,$settings,$MATRIX_MESSAGE_PLUGIN_NAME,$MATRIX_LOCATION,$MATRIX_EXEC_PAGE_NAME;
 	if($DEBUG)
 		logEntry("starting sendlinemessage");
 
@@ -183,6 +183,15 @@ function sendLineMessage($line,$clearMessage=FALSE) {
 		logEntry("NOT immediately outputting to matrix");
 	} else {
 		logEntry("IMMEDIATE OUTPUT ENABLED");
+		
+		if($REMOTE_EDMRDS) {
+			//remote EDM RDS using the runEventScript remote
+			//use the MatrixLocation IP address
+			$REMOTE_EDMRDS_CMD = "/usr/bin/curl -s --basic 'http://".$MATRIX_LOCATION."/runEventScript.php?scriptName=".$EDM_RDS_SCRIPT_NAME."&args=".urlencode("-s".$line)."'";
+			logEntry("Remote EDM RDS CMD: ".$REMOTE_EDMRDS_CMD);
+			exec($REMOTE_EDMRDS_CMD);
+			
+		} else {
 		logEntry("Matrix location: ".$MATRIX_LOCATION);
 		logEntry("Matrix Exec page: ".$MATRIX_EXEC_PAGE_NAME);
 		
@@ -195,6 +204,7 @@ function sendLineMessage($line,$clearMessage=FALSE) {
 			logEntry("LOCAL command: ".$IMMEDIATE_CMD);
 			exec($IMMEDIATE_CMD);
 		}
+	}
 	}
 	
 	if($DEBUG)

@@ -25,7 +25,7 @@ $STATIC_TEXT_PRE=trim($_POST["STATIC_TEXT_PRE"]);
 $ENABLED=$_POST["ENABLED"];
 $IMMEDIATE_OUTPUT=$_POST["IMMEDIATE_OUTPUT"];
 $MATRIX_LOCATION=$_POST["MATRIX_LOCATION"];
-
+$REMOTE_EDMRDS=$_POST["REMOTE_EDMRDS"];
 
 $SEPARATOR = $_POST["SEPARATOR"];
 
@@ -53,6 +53,7 @@ if(isset($_POST['submit']))
 	WriteSettingToFile("STATION_ID",urlencode($STATION_ID),$pluginName);
 	WriteSettingToFile("SEPARATOR",urlencode($SEPARATOR),$pluginName);
 	WriteSettingToFile("MATRIX_LOCATION",urlencode($MATRIX_LOCATION),$pluginName);
+	WriteSettingToFile("REMOTE_EDMRDS",$REMOTE_EDMRDS,$pluginName);
 } else {
 
 	
@@ -64,7 +65,7 @@ if(isset($_POST['submit']))
 	$IMMEDIATE_OUTPUT = $pluginSettings['IMMEDIATE_OUTPUT'];
 	$MATRIX_LOCATION = $pluginSettings['MATRIX_LOCATION'];
 	$SEPARATOR = urldecode($pluginSettings['SEPARATOR']);
-	
+	$REMOTE_EDMRDS = urldecode($pluginSettings['REMOTE_EDMRDS']);
 	
 }
 
@@ -93,6 +94,7 @@ if(isset($_POST['updatePlugin']))
 <p>Configuration:
 <ul>
 <li>Configure your Static text you want to send in front of Artist and song and post text, loop time if you want looping and color</li>
+<li>If using a Remote EDMRDS instance. follow the README_REMOTE_EDMRDS.txt in the plugin folder</li>
 </ul>
 
 <form method="post" action="http://<? echo $_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']?>/plugin.php?plugin=<? echo $pluginName;?>&page=plugin_setup.php">
@@ -147,11 +149,20 @@ Separator between SongTitle & Song Artist:
 <input type="text" value="<? if($SEPARATOR !="" ) { echo $SEPARATOR; } else { echo "-";}?>" name="SEPARATOR" id="SEPARATOR"></input>
 
 <p/>
+<?
+echo "SEND TO REMOTE EDM RDS: ";
+
+if($REMOTE_EDMRDS == "on" || $REMOTE_EDMRDS == 1) {
+		echo "<input type=\"checkbox\" checked name=\"REMOTE_EDMRDS\"> \n";
+//PrintSettingCheckbox("Radio Station", "ENABLED", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
+	} else {
+		echo "<input type=\"checkbox\"  name=\"REMOTE_EDMRDS\"> \n";
+}
+?>
+<p/>
 
 
-
-
-MATRIX Message Plugin Location: (IP Address. default 127.0.0.1);
+MATRIX Message Plugin/Remote EDMRDS FPP Instance Location: (IP Address. default 127.0.0.1);
 <input type="text" size="15" value="<? if($MATRIX_LOCATION !="" ) { echo $MATRIX_LOCATION; } else { echo "127.0.0.1";}?>" name="MATRIX_LOCATION" id="MATRIX_LOCATION"></input>
 <p/>
 
