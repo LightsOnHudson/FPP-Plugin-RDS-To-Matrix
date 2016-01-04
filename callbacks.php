@@ -43,6 +43,7 @@ if (file_exists($pluginConfigFile))
 $ENABLED = urldecode($pluginSettings['ENABLED']);
 $IMMEDIATE_OUTPUT = urldecode($pluginSettings['IMMEDIATE_OUTPUT']);
 $MATRIX_LOCATION = urldecode($pluginSettings['MATRIX_LOCATION']);
+$REMOTE_EDMRDS = urldecode($pluginSettings['REMOTE_EDMRDS']);
 
 //arg0 is  the program
 //arg1 is the first argument in the registration this will be --list
