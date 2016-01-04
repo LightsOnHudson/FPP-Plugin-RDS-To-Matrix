@@ -184,6 +184,7 @@ function sendLineMessage($line,$clearMessage=FALSE) {
 	} else {
 		logEntry("IMMEDIATE OUTPUT ENABLED");
 		
+		//added jan 4 2016
 		if($REMOTE_EDMRDS) {
 			//remote EDM RDS using the runEventScript remote
 			//use the MatrixLocation IP address

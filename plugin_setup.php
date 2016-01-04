@@ -2,6 +2,10 @@
 //$DEBUG=true;
 //include_once "/opt/fpp/www/common.php";
 
+//added remote edmrds option
+//need to soft link /rds-song.py to /home/fpp/media/scripts from home/fpp/media/plugins/edmrds
+
+
 $pluginName = "rdsToMatrix";
 include_once "functions.inc.php";
 include_once "commonFunctions.inc.php";
