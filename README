@@ -20,3 +20,13 @@ Restart FPPD
 
 Enjoy your text to your matrix!
 
+If you want to send the data to a remote instance of the EDM rds plugin then you need to make a soft link in the 
+/home/fpp/media/scripts directory to the rds-song.py file located in /home/fpp/media/plugins/edmrds
+
+you do this by typing
+
+cd /home/fpp/media/scripts
+ln -s /home/fpp/media/scripts/edmrds/rds-song.py
+
+
+
