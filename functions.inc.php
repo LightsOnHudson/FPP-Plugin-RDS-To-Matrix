@@ -189,7 +189,7 @@ function sendLineMessage($line,$clearMessage=FALSE) {
 			//remote EDM RDS using the runEventScript remote
 			//use the MatrixLocation IP address
 			$EDM_RDS_SCRIPT_NAME="rds-song.py";
-			$REMOTE_EDMRDS_CMD = "/usr/bin/curl -s --basic 'http://".$MATRIX_LOCATION."/runEventScript.php?scriptName=".$EDM_RDS_SCRIPT_NAME."&args=\"-s".htmlspecialchars(urlencode($line))."\"'";
+			$REMOTE_EDMRDS_CMD = "/usr/bin/curl -s --basic 'http://".$MATRIX_LOCATION."/runPluginScript.php?scriptName=".$EDM_RDS_SCRIPT_NAME."&args=\"-s".htmlspecialchars(urlencode($line))."\"'";
 			logEntry("Remote EDM RDS CMD: ".$REMOTE_EDMRDS_CMD);
 			exec($REMOTE_EDMRDS_CMD);
 			
