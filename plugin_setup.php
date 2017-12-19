@@ -134,7 +134,7 @@ createTables();
 <?php 
 echo "ENABLE PLUGIN: ";
 
-PrintSettingCheckbox("RDS To Matrix", "ENABLED", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
+PrintSettingCheckbox("RDS To Matrix", "ENABLED", $restart = 1, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
 
 
 
