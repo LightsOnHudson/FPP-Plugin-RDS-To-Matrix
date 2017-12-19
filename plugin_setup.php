@@ -71,7 +71,7 @@ if(isset($_POST['submit']))
 	WriteSettingToFile("STATIC_TEXT_PRE",urlencode($STATIC_TEXT_PRE),$pluginName);
 	WriteSettingToFile("STATIC_TEXT_POST",urlencode($STATIC_TEXT_POST),$pluginName);
 //	WriteSettingToFile("ENABLED",$ENABLED,$pluginName);
-	WriteSettingToFile("IMMEDIATE_OUTPUT",$IMMEDIATE_OUTPUT,$pluginName);
+	//WriteSettingToFile("IMMEDIATE_OUTPUT",$IMMEDIATE_OUTPUT,$pluginName);
 	WriteSettingToFile("STATION_ID",urlencode($STATION_ID),$pluginName);
 	WriteSettingToFile("SEPARATOR",urlencode($SEPARATOR),$pluginName);
 	WriteSettingToFile("MATRIX_LOCATION",urlencode($MATRIX_LOCATION),$pluginName);
@@ -141,12 +141,8 @@ PrintSettingCheckbox("RDS To Matrix", "ENABLED", $restart = 1, $reboot = 0, "tru
 echo "<p/> \n";
 echo "Immediately output to Matrix (Run MATRIX plugin): ";
 
-if($IMMEDIATE_OUTPUT == "on" || $IMMEDIATE_OUTPUT == 1) {
-	echo "<input type=\"checkbox\" checked name=\"IMMEDIATE_OUTPUT\"> \n";
-	//PrintSettingCheckbox("Radio Station", "ENABLED", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
-} else {
-	echo "<input type=\"checkbox\"  name=\"IMMEDIATE_OUTPUT\"> \n";
-}
+PrintSettingCheckbox("Immediate Output to matrix", "IMMEDIATE_OUTPUT", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
+
 
 
 echo "<p/> \n";
