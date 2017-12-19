@@ -1,6 +1,6 @@
 <?php
 //$DEBUG=true;
-//include_once "/opt/fpp/www/common.php";
+include_once "/opt/fpp/www/common.php";
 
 //added remote edmrds option
 //need to soft link /rds-song.py to /home/fpp/media/scripts from home/fpp/media/plugins/edmrds
@@ -10,10 +10,34 @@ $pluginName = "rdsToMatrix";
 include_once "functions.inc.php";
 include_once "commonFunctions.inc.php";
 
+include_once 'version.inc';
 
 $pluginUpdateFile = $settings['pluginDirectory']."/".$pluginName."/"."pluginUpdate.inc";
 $logFile = $settings['logDirectory']."/".$pluginName.".log";
 $myPid = getmypid();
+
+
+$messageQueue_Plugin = "MessageQueue";
+$MESSAGE_QUEUE_PLUGIN_ENABLED=false;
+
+
+$logFile = $settings['logDirectory']."/".$pluginName.".log";
+
+
+
+$messageQueuePluginPath = $settings['pluginDirectory']."/".$messageQueue_Plugin."/";
+
+$messageQueueFile = urldecode(ReadSettingFromFile("MESSAGE_FILE",$messageQueue_Plugin));
+
+if(file_exists($messageQueuePluginPath."functions.inc.php"))
+{
+	include $messageQueuePluginPath."functions.inc.php";
+	$MESSAGE_QUEUE_PLUGIN_ENABLED=true;
+	
+} else {
+	logEntry("Message Queue Plugin not installed, some features will be disabled");
+}
+
 
 $gitURL = "https://github.com/LightsOnHudson/FPP-Plugin-RDS-To-Matrix.git";
 
@@ -33,12 +57,6 @@ $REMOTE_EDMRDS=$_POST["REMOTE_EDMRDS"];
 
 $SEPARATOR = $_POST["SEPARATOR"];
 
-if($DEBUG) {
-
-	echo "PORT: ".$_POST['PORT'];//print_r($_POST["PORT"]);
-	echo "loop message: ".$_POST["LOOPMESSAGE"]."<br/> \n";
-	
-}
 
 
 
@@ -52,13 +70,17 @@ if(isset($_POST['submit']))
 
 	WriteSettingToFile("STATIC_TEXT_PRE",urlencode($STATIC_TEXT_PRE),$pluginName);
 	WriteSettingToFile("STATIC_TEXT_POST",urlencode($STATIC_TEXT_POST),$pluginName);
-	WriteSettingToFile("ENABLED",$ENABLED,$pluginName);
+//	WriteSettingToFile("ENABLED",$ENABLED,$pluginName);
 	WriteSettingToFile("IMMEDIATE_OUTPUT",$IMMEDIATE_OUTPUT,$pluginName);
 	WriteSettingToFile("STATION_ID",urlencode($STATION_ID),$pluginName);
 	WriteSettingToFile("SEPARATOR",urlencode($SEPARATOR),$pluginName);
 	WriteSettingToFile("MATRIX_LOCATION",urlencode($MATRIX_LOCATION),$pluginName);
 	WriteSettingToFile("REMOTE_EDMRDS",$REMOTE_EDMRDS,$pluginName);
-} else {
+} 
+sleep(1);
+$pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
+if (file_exists($pluginConfigFile))
+	$pluginSettings = parse_ini_file($pluginConfigFile);
 
 	
 	$STATION_ID = urldecode($pluginSettings['STATION_ID']);
@@ -71,7 +93,7 @@ if(isset($_POST['submit']))
 	$SEPARATOR = urldecode($pluginSettings['SEPARATOR']);
 	$REMOTE_EDMRDS = urldecode($pluginSettings['REMOTE_EDMRDS']);
 	
-}
+
 
 if(isset($_POST['updatePlugin']))
 {
@@ -81,6 +103,13 @@ if(isset($_POST['updatePlugin']))
 	echo $updateResult."<br/> \n";
 }
 
+$Plugin_DBName = $settings['configDirectory']."/FPP.".$pluginName.".db";
+
+//echo "PLUGIN DB:NAME: ".$Plugin_DBName;
+
+$db = new SQLite3($Plugin_DBName) or die('Unable to open database');
+createTables();
+
 ?>
 
 <html>
@@ -89,7 +118,7 @@ if(isset($_POST['updatePlugin']))
 
 <div id="rdsToMatrix" class="settings">
 <fieldset>
-<legend>RDS To Matrix Support Instructions</legend>
+<legend><?php echo $pluginName." Version: ".$pluginVersion;?> Support Instructions</legend>
 
 <p>Known Issues:
 <ul>
@@ -105,12 +134,8 @@ if(isset($_POST['updatePlugin']))
 <?php 
 echo "ENABLE PLUGIN: ";
 
-if($ENABLED == "on" || $ENABLED == 1) {
-		echo "<input type=\"checkbox\" checked name=\"ENABLED\"> \n";
-//PrintSettingCheckbox("Radio Station", "ENABLED", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
-	} else {
-		echo "<input type=\"checkbox\"  name=\"ENABLED\"> \n";
-}
+PrintSettingCheckbox("RDS To Matrix", "ENABLED", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
+
 
 
 echo "<p/> \n";
