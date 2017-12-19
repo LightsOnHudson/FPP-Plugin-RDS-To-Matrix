@@ -212,17 +212,43 @@ function sendLineMessage($line,$clearMessage=FALSE) {
 			exec($REMOTE_EDMRDS_CMD);
 			
 		} else {
-		logEntry("Matrix location: ".$MATRIX_LOCATION);
-		logEntry("Matrix Exec page: ".$MATRIX_EXEC_PAGE_NAME);
-		
-		if($MATRIX_LOCATION != "127.0.0.1") {
-			$remoteCMD = "/usr/bin/curl -s --basic 'http://".$MATRIX_LOCATION."/plugin.php?plugin=".$MATRIX_MESSAGE_PLUGIN_NAME."&page=".$MATRIX_EXEC_PAGE_NAME."&nopage=1' > /dev/null";
-			logEntry("REMOTE MATRIX TRIGGER: ".$remoteCMD);
-			exec($remoteCMD);
-		} else {
-			$IMMEDIATE_CMD = $settings['pluginDirectory']."/".$MATRIX_MESSAGE_PLUGIN_NAME."/matrix.php";
-			logEntry("LOCAL command: ".$IMMEDIATE_CMD);
-			exec($IMMEDIATE_CMD);
+			logEntry ( "IMMEDIATE OUTPUT ENABLED" );
+			
+			// write high water mark, so that if run-matrix is run it will not re-run old messages
+			
+			$pluginLatest = time ();
+			
+			// logEntry("message queue latest: ".$pluginLatest);
+			// logEntry("Writing high water mark for plugin: ".$pluginName." LAST_READ = ".$pluginLatest);
+			
+			// file_put_contents($messageQueuePluginPath.$pluginSubscriptions[$pluginIndex].".lastRead",$pluginLatest);
+			// WriteSettingToFile("LAST_READ",urlencode($pluginLatest),$pluginName);
+			
+			// do{
+			
+			logEntry ( "Matrix location: " . $MATRIX_LOCATION );
+			logEntry ( "Matrix Exec page: " . $MATRIX_EXEC_PAGE_NAME );
+			$MATRIX_ACTIVE = true;
+			WriteSettingToFile ( "MATRIX_ACTIVE", urlencode ( $MATRIX_ACTIVE ), $pluginName );
+			logEntry ( "MATRIX ACTIVE: " . $MATRIX_ACTIVE );
+			
+			$curlURL = "http://" . $MATRIX_LOCATION . "/plugin.php?plugin=" . $MATRIX_MESSAGE_PLUGIN_NAME . "&page=" . $MATRIX_EXEC_PAGE_NAME . "&nopage=1&subscribedPlugin=" . $pluginName . "&onDemandMessage=" . urlencode ( $messageText );
+			if ($DEBUG)
+				logEntry ( "MATRIX TRIGGER: " . $curlURL );
+				
+				$ch = curl_init ();
+				curl_setopt ( $ch, CURLOPT_URL, $curlURL );
+				
+				curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+				curl_setopt ( $ch, CURLOPT_WRITEFUNCTION, 'do_nothing' );
+				curl_setopt ( $ch, CURLOPT_VERBOSE, false );
+				
+				$result = curl_exec ( $ch );
+				logEntry ( "Curl result: " . $result ); // $result;
+				curl_close ( $ch );
+				
+				$MATRIX_ACTIVE = false;
+				WriteSettingToFile ( "MATRIX_ACTIVE", urlencode ( $MATRIX_ACTIVE ), $pluginName );
 		}
 	}
 	}
