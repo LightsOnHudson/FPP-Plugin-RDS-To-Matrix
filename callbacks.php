@@ -33,7 +33,6 @@ if(file_exists($messageQueuePluginPath."functions.inc.php"))
                 logEntry("Message Queue Plugin not installed, some features will be disabled");
         }
 
-$ENABLED="";
 
 $pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
 
@@ -53,7 +52,7 @@ $logFile = $settings['logDirectory']."/".$pluginName.".log";
 //echo "Enabled: ".$ENABLED."<br/> \n";
 
 
-if($ENABLED != "on" && $ENABLED != "1") {
+if(!$ENABLED) {
 	logEntry("Plugin Status: DISABLED Please enable in Plugin Setup to use & Restart FPPD Daemon");
 	
 	exit(0);
