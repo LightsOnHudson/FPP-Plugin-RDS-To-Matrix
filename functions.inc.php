@@ -196,7 +196,7 @@ function sendLineMessage($line,$clearMessage=FALSE) {
 	addNewMessage($line,$pluginName,$pluginData="PluginData");
 	
 
-	if($IMMEDIATE_OUTPUT != "on" && $IMMEDIATE_OUTPUT != "1") {
+	if(!$IMMEDIATE_OUTPUT) {
 		logEntry("NOT immediately outputting to matrix");
 	} else {
 		logEntry("IMMEDIATE OUTPUT ENABLED");

@@ -141,7 +141,7 @@ PrintSettingCheckbox("RDS To Matrix", "ENABLED", $restart = 1, $reboot = 0, "tru
 echo "<p/> \n";
 echo "Immediately output to Matrix (Run MATRIX plugin): ";
 
-PrintSettingCheckbox("Immediate Output to matrix", "IMMEDIATE_OUTPUT", $restart = 0, $reboot = 0, "ON", "OFF", $pluginName = $pluginName, $callbackName = "");
+PrintSettingCheckbox("Immediate Output to matrix", "IMMEDIATE_OUTPUT", $restart = 0, $reboot = 0, "true", "", $pluginName = $pluginName, $callbackName = "");
 
 
 
