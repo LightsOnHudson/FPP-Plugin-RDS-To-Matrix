@@ -249,7 +249,7 @@ function sendLineMessage($line,$clearMessage=FALSE) {
 				
 				$MATRIX_ACTIVE = false;
 				WriteSettingToFile ( "MATRIX_ACTIVE", urlencode ( $MATRIX_ACTIVE ), $pluginName );
-		}
+		
 	}
 	}
 	
