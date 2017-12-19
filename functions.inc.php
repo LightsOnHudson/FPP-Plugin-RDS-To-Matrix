@@ -120,15 +120,32 @@ function processCallback($argv) {
 
 				break;
 				case "both":
+				case "both":
+					
+					if($DEBUG) {
+						logEntry("Media File: ".$obj->{'Media'});
+						logEntry("Title : ".$obj->{'title'});
+						logEntry("Artist: ".$obj->{'artist'});
 						
-					logEntry("MEDIA ENTRY: EXTRACTING TITLE AND ARTIST");
+						logEntry("Sequence : ".$obj->{'Sequence'});
 						
-					$songTitle = $obj->{'title'};
+						
+					}
+					
+					$SONG_TITLE = $obj->{'Media'};
+					$SEQUENCE_NAME = $obj->{'Sequence'};
+					
+					//send to API THINGSPEAK
+					//check to see if title / media file etc has something use title first
+					if($obj->{'title'} != "") {
+						$SONG_TITLE = $obj->{'title'};
+					} elseif ($obj->{'Media'} != "") {
+						$SONG_TITLE = $obj->{'Media'};
+						$SONG_TITLE = basename($SONG_TITLE, ".mp3").PHP_EOL;
+					}
 					$songArtist = $obj->{'artist'};
-					//	if($songArtist != "") {
 				
-				
-					$messageToSend = $songTitle." ".$SEPARATOR." ".$songArtist;
+					$messageToSend = $SONG_TITLE." ".$SEPARATOR." ".$songArtist;
 					if($DEBUG)
 					logEntry("MESSAGE to send: ".$messageToSend);
 					sendLineMessage($messageToSend,$clearMessage);
