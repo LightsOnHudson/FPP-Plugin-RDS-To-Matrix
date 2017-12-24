@@ -183,6 +183,8 @@ if($REMOTE_EDMRDS == "on" || $REMOTE_EDMRDS == 1) {
 	} else {
 		echo "<input type=\"checkbox\"  name=\"REMOTE_EDMRDS\"> \n";
 }
+
+
 ?>
 <p/>
 
@@ -203,6 +205,15 @@ MATRIX Message Plugin/Remote EDMRDS FPP Instance Location: (IP Address. default 
  	//echo "updating plugin included";
 	include $pluginUpdateFile;
 }
+
+echo "<p/> \n";
+echo "DEBUG: ";
+
+//if($IMMEDIATE_OUTPUT == "on" || $IMMEDIATE_OUTPUT == 1) {
+//	echo "<input type=\"checkbox\" checked name=\"IMMEDIATE_OUTPUT\"> \n";
+PrintSettingCheckbox("DEBUG", "DEBUG", $restart = 0, $reboot = 0, "true", "", $pluginName = $pluginName, $callbackName = "");
+
+echo "<p/> \n";
 ?>
 <p>To report a bug, please file it against <?php echo $gitURL;?>
 </form>
