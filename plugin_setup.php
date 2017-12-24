@@ -46,16 +46,7 @@ logEntry("plugin update file: ".$pluginUpdateFile);
 $DEBUG = false;
 
 
-$STATION_ID=trim($_POST["STATION_ID"]);
 
-$STATIC_TEXT_POST=trim($_POST["STATIC_TEXT_POST"]);
-$STATIC_TEXT_PRE=trim($_POST["STATIC_TEXT_PRE"]);
-$ENABLED=$_POST["ENABLED"];
-$IMMEDIATE_OUTPUT=$_POST["IMMEDIATE_OUTPUT"];
-$MATRIX_LOCATION=$_POST["MATRIX_LOCATION"];
-$REMOTE_EDMRDS=$_POST["REMOTE_EDMRDS"];
-
-$SEPARATOR = $_POST["SEPARATOR"];
 
 
 
@@ -64,6 +55,17 @@ $SEPARATOR = $_POST["SEPARATOR"];
 
 if(isset($_POST['submit']))
 {
+	
+	$STATION_ID=trim($_POST["STATION_ID"]);
+	
+	$STATIC_TEXT_POST=trim($_POST["STATIC_TEXT_POST"]);
+	$STATIC_TEXT_PRE=trim($_POST["STATIC_TEXT_PRE"]);
+	$ENABLED=$_POST["ENABLED"];
+	$IMMEDIATE_OUTPUT=$_POST["IMMEDIATE_OUTPUT"];
+	$MATRIX_LOCATION=$_POST["MATRIX_LOCATION"];
+	$REMOTE_EDMRDS=$_POST["REMOTE_EDMRDS"];
+	
+	$SEPARATOR = $_POST["SEPARATOR"];
 
 //	echo "Writring config fie <br/> \n";
 
@@ -82,6 +84,9 @@ $pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
 if (file_exists($pluginConfigFile))
 	$pluginSettings = parse_ini_file($pluginConfigFile);
 
+	if($DEBUG) {
+		logEntry("Plugin Config file: ".$pluginConfigFile);
+	}
 	
 	$STATION_ID = urldecode($pluginSettings['STATION_ID']);
 	

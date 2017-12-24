@@ -221,7 +221,7 @@ function sendLineMessage($line,$clearMessage=FALSE) {
 			exec($REMOTE_EDMRDS_CMD);
 			
 		} else {
-			logEntry ( "IMMEDIATE OUTPUT ENABLED" );
+		//	logEntry ( "IMMEDIATE OUTPUT ENABLED" );
 			
 			// write high water mark, so that if run-matrix is run it will not re-run old messages
 			
