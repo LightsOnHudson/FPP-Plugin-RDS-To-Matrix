@@ -153,7 +153,7 @@ function processCallback($argv) {
 					}
 					$songArtist = $obj->{'artist'};
 				
-					$messageToSend = $SONG_TITLE." ".$SEPARATOR." ".$songArtist;
+					$messageToSend = trim($SONG_TITLE)." ".$SEPARATOR." ".trim($songArtist);
 					if($DEBUG)
 						logEntry("MESSAGE to send: ".$messageToSend);
 					sendLineMessage($messageToSend,$clearMessage);
