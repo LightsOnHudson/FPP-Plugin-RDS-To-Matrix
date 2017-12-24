@@ -100,7 +100,12 @@ if (file_exists($pluginConfigFile))
 	$SEPARATOR = urldecode($pluginSettings['SEPARATOR']);
 	$REMOTE_EDMRDS = urldecode($pluginSettings['REMOTE_EDMRDS']);
 	
-
+if($DEBUG) {
+	echo "POST Variables: <br/> <pre> \n";
+	print_r($_POST);
+	echo "</pre> \n";
+	echo "<p/> \n";
+}
 
 if(isset($_POST['updatePlugin']))
 {
