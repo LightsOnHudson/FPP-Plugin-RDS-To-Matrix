@@ -43,7 +43,7 @@ $gitURL = "https://github.com/LightsOnHudson/FPP-Plugin-RDS-To-Matrix.git";
 
 logEntry("plugin update file: ".$pluginUpdateFile);
 
-$DEBUG = false;
+//$DEBUG = false;
 
 
 
@@ -84,6 +84,8 @@ $pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
 if (file_exists($pluginConfigFile))
 	$pluginSettings = parse_ini_file($pluginConfigFile);
 
+	$DEBUG = urldecode($pluginSettings['DEBUG']);
+	
 	if($DEBUG) {
 		logEntry("Plugin Config file: ".$pluginConfigFile);
 	}
