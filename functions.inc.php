@@ -189,10 +189,11 @@ function sendLineMessage($line,$clearMessage=FALSE) {
 
 	global $DEBUG,$pluginName,$REMOTE_EDMRDS,$IMMEDIATE_OUTPUT,$settings,$MATRIX_MESSAGE_PLUGIN_NAME,$MATRIX_LOCATION,$MATRIX_EXEC_PAGE_NAME;
 	if($DEBUG)
+	{
 		logEntry("starting sendlinemessage");
 
-	logEntry("Adding to message queue: ".$line);
-	
+		logEntry("Adding to message queue: ".$line);
+	}
 	addNewMessage($line,$pluginName,$pluginData="PluginData");
 	
 
@@ -254,7 +255,7 @@ function sendLineMessage($line,$clearMessage=FALSE) {
 	}
 	
 	if($DEBUG)
-	logEntry("Leaving SendLine Message");
+		logEntry("Leaving SendLine Message");
 }
 
 
