@@ -119,7 +119,7 @@ function processCallback($argv) {
 					sendLineMessage($messageToSend,$clearMessage);
 
 				break;
-				case "both":
+			
 				case "both":
 					
 					if($DEBUG) {
@@ -147,7 +147,7 @@ function processCallback($argv) {
 				
 					$messageToSend = $SONG_TITLE." ".$SEPARATOR." ".$songArtist;
 					if($DEBUG)
-					logEntry("MESSAGE to send: ".$messageToSend);
+						logEntry("MESSAGE to send: ".$messageToSend);
 					sendLineMessage($messageToSend,$clearMessage);
 				
 					break;
