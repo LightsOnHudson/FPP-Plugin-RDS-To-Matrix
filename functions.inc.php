@@ -82,7 +82,9 @@ function processCallback($argv) {
 	
 	$data =  $argv[4];
 
-	logEntry("PROCESSING CALLBACK");
+	if($DEBUG)
+		logEntry("PROCESSING CALLBACK");
+	
 	$clearMessage=FALSE;
 
 	switch ($registrationType)
@@ -91,10 +93,16 @@ function processCallback($argv) {
 			if($argv[3] == "--data")
 			{
 				$data=trim($data);
-				logEntry("DATA: ".$data);
+				if($DEBUG)
+					logEntry("DATA: ".$data);
+				
 				$obj = json_decode($data);
 
 				$type = $obj->{'type'};
+				
+				if($DEBUG) {
+					logEntry("Type is: ".$type);
+				}
 				
 				switch ($type) {
 					
@@ -118,7 +126,7 @@ function processCallback($argv) {
 					logEntry("MESSAGE to send: ".$messageToSend);
 					sendLineMessage($messageToSend,$clearMessage);
 
-				break;
+					break;
 			
 				case "both":
 					
