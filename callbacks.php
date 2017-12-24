@@ -3,7 +3,7 @@
 error_reporting(0);
 
 $pluginName ="rdsToMatrix";
-//$DEBUG=true;
+
 
 $skipJSsettings = 1;
 include_once("/opt/fpp/www/config.php");
