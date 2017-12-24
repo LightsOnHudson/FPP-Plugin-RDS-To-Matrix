@@ -39,6 +39,7 @@ $pluginConfigFile = $settings['configDirectory'] . "/plugin." .$pluginName;
 if (file_exists($pluginConfigFile))
 	$pluginSettings = parse_ini_file($pluginConfigFile);
 	
+$DEBUG = urldecode($pluginSettings['DEBUG']);
 $ENABLED = urldecode($pluginSettings['ENABLED']);
 $IMMEDIATE_OUTPUT = urldecode($pluginSettings['IMMEDIATE_OUTPUT']);
 $MATRIX_LOCATION = urldecode($pluginSettings['MATRIX_LOCATION']);
@@ -69,6 +70,7 @@ $FPPD_COMMAND = $argv[1];
 if($FPPD_COMMAND == "--list") {
 
 			echo $callbackRegisters;
+			
 			logEntry("FPPD List Registration request: responded:". $callbackRegisters);
 			exit(0);
 }

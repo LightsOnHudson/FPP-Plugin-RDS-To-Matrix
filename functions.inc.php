@@ -78,7 +78,7 @@ function processCallback($argv) {
 	$registrationType = $argv[2];
 
 	if($DEBUG)
-	logEntry("registration type: ".$registrationType);
+		logEntry("registration type: ".$registrationType);
 	
 	$data =  $argv[4];
 
