@@ -66,6 +66,9 @@ function processCallback($argv) {
 	global $DEBUG,$pluginName;
 	
 	$SEPARATOR = urldecode(ReadSettingFromFile("SEPARATOR",$pluginName));
+	$STATION_ID = urldecode(ReadSettingFromFile("STATION_ID",$pluginName));
+	$STATIC_TEXT_PRE = urldecode(ReadSettingFromFile("STATIC_TEXT_PRE",$pluginName));
+	$STATIC_TEXT_POST = urldecode(ReadSettingFromFile("STATIC_TEXT_POST",$pluginName));
 
 	//if($DEBUG)
 		//print_r($argv);
@@ -119,9 +122,22 @@ function processCallback($argv) {
 					$songTitle = $obj->{'title'};
 					$songArtist = $obj->{'artist'};
 					//	if($songArtist != "") {
-				
-				
-					$messageToSend = $songTitle." ".$SEPARATOR." ".$songArtist;
+			
+					$messageToSend = "";
+					if(trim($STATION_ID) != "") {
+						$messageToSend .= $STATION_ID." | ";
+					}
+
+					if(trim($STATIC_TEXT_PRE) != "") {
+						$messageToSend .= $STATIC_TEXT_PRE." ";
+					}
+	
+					$messageToSend .= $songTitle." ".$SEPARATOR." ".$songArtist;
+
+					if(trim($STATIC_TEXT_POST) != "") {
+						$messageToSend .= " | ".$STATIC_TEXT_POST;
+					}
+
 					if($DEBUG)
 					logEntry("MESSAGE to send: ".$messageToSend);
 					sendLineMessage($messageToSend,$clearMessage);
@@ -152,8 +168,22 @@ function processCallback($argv) {
 						$SONG_TITLE = basename($SONG_TITLE, ".mp3").PHP_EOL;
 					}
 					$songArtist = $obj->{'artist'};
+
+					$messageToSend = "";
+					if(trim($STATION_ID) != "") {
+						$messageToSend .= $STATION_ID." | ";
+					}
+
+					if(trim($STATIC_TEXT_PRE) != "") {
+						$messageToSend .= $STATIC_TEXT_PRE." ";
+					}
 				
-					$messageToSend = trim($SONG_TITLE)." ".$SEPARATOR." ".trim($songArtist);
+					$messageToSend .= trim($SONG_TITLE)." ".$SEPARATOR." ".trim($songArtist);
+
+					if(trim($STATIC_TEXT_POST) != "") {
+						$messageToSend .= " | ".$STATIC_TEXT_POST;
+					}
+
 					if($DEBUG)
 						logEntry("MESSAGE to send: ".$messageToSend);
 					sendLineMessage($messageToSend,$clearMessage);
